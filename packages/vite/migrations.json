@@ -74,6 +74,7 @@
         "vitest": ">=4.0.0"
       },
       "description": "Migrate workspaces past breaking changes for Vitest 4.",
+      "implementation": "./src/migrations/update-23-0-0/migrate-to-vitest-4",
       "prompt": "./src/migrations/update-23-0-0/ai-instructions-for-vitest-4.md"
     }
   },
