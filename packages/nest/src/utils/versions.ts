@@ -1,4 +1,5 @@
-export const nxVersion = require('../../package.json').version;
+import { join } from 'path';
+export const nxVersion = require(join('@nx/nest', 'package.json')).version;
 
 export const nestJsVersion = '^11.0.0';
 export const nestJsSchematicsVersion = '^11.0.0';
