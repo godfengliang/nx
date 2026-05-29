@@ -1,4 +1,8 @@
-import { escapeXmlBody, renderKeyMultilineValue } from './shared-rendering';
+import {
+  escapeXmlBody,
+  renderKeyMultilineValue,
+  renderMigrationDocsBlock,
+} from './shared-rendering';
 
 export interface PromptMigrationContext {
   package: string;
@@ -9,6 +13,8 @@ export interface PromptMigrationContext {
   promptPath: string;
   /** Absolute path the agent must write its handoff file to. */
   handoffFileAbsolutePath: string;
+  /** Workspace-relative path to the migration's documentation file, if any. */
+  docsPath?: string;
 }
 
 /**
@@ -39,8 +45,11 @@ export function buildPromptMigrationUserPrompt(
     );
   }
 
+  lines.push(`</migration>`);
+
+  lines.push(...renderMigrationDocsBlock(ctx.docsPath));
+
   lines.push(
-    `</migration>`,
     ``,
     `<instructions_file>${escapeXmlBody(ctx.promptPath)}</instructions_file>`,
     ``,

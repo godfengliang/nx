@@ -7,6 +7,7 @@ import {
   renderGitInspectInstruction,
   renderKeyMultilineValue,
   renderListItem,
+  renderMigrationDocsBlock,
   stripAnsi,
 } from './shared-rendering';
 
@@ -19,6 +20,8 @@ export interface HybridPromptMigrationContext {
   promptPath: string;
   /** Absolute path the agent must write its handoff file to. */
   handoffFileAbsolutePath: string;
+  /** Workspace-relative path to the migration's documentation file, if any. */
+  docsPath?: string;
   /** Context captured from the deterministic generator phase. */
   impl?: {
     /** Raw output from the generator (devkit logger + console). */
@@ -72,6 +75,8 @@ export function buildHybridPromptUserPrompt(
   }
 
   lines.push(`</migration>`);
+
+  lines.push(...renderMigrationDocsBlock(ctx.docsPath));
 
   const logs = escapeXmlBody(stripAnsi(ctx.impl?.logs ?? '').trim());
   const agentContext = filterNonEmptyStrings(ctx.impl?.agentContext ?? []);
